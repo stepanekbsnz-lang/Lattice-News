@@ -1,0 +1,43 @@
+body {
+    font-family: "Open Sans", Arial, sans-serif;
+    background-color: antiquewhite;
+    padding: 5px;
+}
+
+@font-face {
+    font-family: 'MyFont';
+    src: url('anotherdanger.otf') format('opentype');
+}
+
+.logo {
+    font-family: 'MyFont', sans-serif;
+    color: red;
+    display: flex;
+}
+
+.news {
+    border-color: saddlebrown;
+    border-radius: 15px;
+    background-color: coral;
+    padding: 15px;
+    margin-bottom: 24px;
+    color: black;
+}
+
+.gap {
+    margin-bottom: 24px;
+}
+
+.game {
+    border-color: black;
+    border-radius: 15px;
+    background-color: coral;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+}
+
+.game img {
+    border-radius: 15px
+}
