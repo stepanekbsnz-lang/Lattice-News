@@ -13,51 +13,74 @@
         </div></a>
         <h1>Тех поддержка</h1>
         <hr>
-        <button id="support-btn" style="position: fixed; bottom: 20px; right: 20px; background: #007bff; color: white; border: none; border-radius: 50px; padding: 12px 20px; cursor: pointer; font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 9999;">Поддержка</button>
-
-<!-- Окно чата/формы -->
-<div id="support-modal" style="display: none; position: fixed; bottom: 80px; right: 20px; width: 300px; background: white; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); font-family: sans-serif; overflow: hidden; z-index: 9999;">
-  <div style="background: #007bff; color: white; padding: 10px 15px; font-weight: bold; display: flex; justify-content: space-between;">
-    <span>Написать в поддержку</span>
-    <span id="support-close" style="cursor: pointer;">&times;</span>
-  </div>
+        <div id="support-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; font-family: sans-serif; z-index: 99999;">
   
-  <!-- Замените "ВАШ_ИДЕНТИФИКАТОР" на ID, который выдаст Formspree -->
-  <form id="support-form" action="https://formspree.io/f/maeyyqvd" method="POST" style="padding: 15px;">
-    <input type="text" name="Имя" placeholder="Ваше имя" required style="width: 100%; margin-bottom: 10px; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;">
-    <input type="email" name="Email" placeholder="Email для ответа" required style="width: 100%; margin-bottom: 10px; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;">
-    <textarea name="Сообщение" placeholder="Опишите вашу проблему..." rows="4" required style="width: 100%; margin-bottom: 10px; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px Dino;"></textarea>
-    <button type="submit" style="width: 100%; background: #007bff; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer;">Отправить</button>
-  </form>
+  <div style="background: white; width: 100%; max-width: 450px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow: hidden; margin: 20px;">
+    
+    <!-- Шапка формы -->
+    <div style="background: #007bff; color: white; padding: 20px; font-size: 1.2rem; font-weight: bold; text-align: center;">
+      Написать в техподдержку
+    </div>
+    
+    <!-- Форма отправки -->
+    <form id="support-form" action="https://formspree.io/f/maeyyqvd" method="POST" style="padding: 25px; display: flex; flex-direction: column; gap: 15px;">
+      
+      <div>
+        <label style="display: block; margin-bottom: 5px; color: #333; font-size: 0.9rem;">Ваше имя</label>
+        <input type="text" name="Имя" placeholder="Иван Иванов" required style="width: 100%; padding: 12px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem;">
+      </div>
+
+      <div>
+        <label style="display: block; margin-bottom: 5px; color: #333; font-size: 0.9rem;">Email для ответа</label>
+        <input type="email" name="Email" placeholder="example@mail.com" required style="width: 100%; padding: 12px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem;">
+      </div>
+
+      <div>
+        <label style="display: block; margin-bottom: 5px; color: #333; font-size: 0.9rem;">Описание проблемы</label>
+        <textarea name="Сообщение" placeholder="Опишите ваш вопрос в деталях..." rows="5" required style="width: 100%; padding: 12px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; resize: vertical;"></textarea>
+      </div>
+
+      <button type="submit" style="background: #007bff; color: white; border: none; padding: 14px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: bold; margin-top: 10px; transition: background 0.2s;">
+        Отправить обращение
+      </button>
+
+    </form>
+  </div>
 </div>
 
 <script>
-  const btn = document.getElementById('support-btn');
-  const modal = document.getElementById('support-modal');
-  const closeBtn = document.getElementById('support-close');
   const form = document.getElementById('support-form');
 
-  // Открытие и закрытие окна
-  btn.onclick = () => modal.style.display = 'block';
-  closeBtn.onclick = () => modal.style.display = 'none';
-
-  // Плавная отправка без перезагрузки страницы
   form.onsubmit = async (e) => {
     e.preventDefault();
+    
+    // Меняем текст кнопки во время отправки
+    const btn = form.querySelector('button');
+    const originalText = btn.innerText;
+    btn.innerText = 'Отправка...';
+    btn.disabled = true;
+
     const formData = new FormData(form);
     
-    const response = await fetch(form.action, {
-      method: 'POST',
-      body: formData,
-      headers: { 'Accept': 'application/json' }
-    });
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
 
-    if (response.ok) {
-      alert('Спасибо! Ваше обращение отправлено на почту поддержки.');
-      modal.style.display = 'none';
-      form.reset();
-    } else {
-      alert('Произошла ошибка при отправке. Попробуйте еще раз.');
+      if (response.ok) {
+        alert('Спасибо! Ваше обращение успешно отправлено на почту поддержки.');
+        form.reset();
+      } else {
+        alert('Произошла ошибка при отправке. Проверьте правильность введенных данных.');
+      }
+    } catch (error) {
+      alert('Не удалось связаться с сервером. Проверьте интернет-соединение.');
+    } finally {
+      // Возвращаем кнопку в исходное состояние
+      btn.innerText = originalText;
+      btn.disabled = false;
     }
   };
 </script>
