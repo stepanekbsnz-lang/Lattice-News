@@ -13,14 +13,16 @@
         </div></a>
         <h1>Техподдержка</h1>
         <hr>
-        <div id="support-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; font-family: sans-serif; z-index: 99999;">
+        <div id="support-container" style="display: flex; justify-content: center; align-items: center; z-index: 99999;">
   
     <div style="background: antiquewhite; width: 100%; max-width: 450px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow: hidden; margin: 20px;">
     
+    <!-- Шапка формы -->
     <div style="background: coral; color: white; padding: 20px; font-size: 1.2rem; font-weight: bold; text-align: center;">
       Написать в техподдержку
     </div>
     
+    <!-- Форма отправки -->
     <form id="support-form" action="https://formspree.io/f/maeyyqvd" method="POST" style="padding: 25px; display: flex; flex-direction: column; gap: 15px;">
       
       <div>
@@ -44,14 +46,30 @@
 
     </form>
     </div>
-</div>
+    </div>
+    <h1>Правила техподдержки:</h1>
+    <h2>Можно отправлять:</h2>
+    <ul>
+      <li>запрос на рекламу;</li>
+      <li>запрос на участие в следующем видео;</li>
+      <li>жалобу на оскорбительный комментарий или баг сайта.</li>
+    </ul>
+    <h2>Нельзя отправлять:</h2>
+    <ul>
+      <li>оскорбительные выражения;</li>
+      <li>бесполезную информацию и глупые вопросы;</li>
+      <li>один и тот же вопрос больше трёх раз (все остальные обращения от этого отправителя будут попадать в папку "Спам").</li>
+    </ul>
+    <hr>
+    <small>Использование моего контента без разрешения Решётки в своих видео строго запрещено</small>
 
 <script>
   const form = document.getElementById('support-form');
 
   form.onsubmit = async (e) => {
     e.preventDefault();
-  
+    
+    // Меняем текст кнопки во время отправки
     const btn = form.querySelector('button');
     const originalText = btn.innerText;
     btn.innerText = 'Отправка...';
@@ -75,6 +93,7 @@
     } catch (error) {
       alert('Не удалось связаться с сервером. Проверьте интернет-соединение.');
     } finally {
+      // Возвращаем кнопку в исходное состояние
       btn.innerText = originalText;
       btn.disabled = false;
     }
