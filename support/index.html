@@ -15,90 +15,88 @@
         <hr>
         <div id="support-container" style="display: flex; justify-content: center; align-items: center; z-index: 99999;">
   
-    <div style="background: antiquewhite; width: 100%; max-width: 450px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow: hidden; margin: 20px;">
+        <div style="background: antiquewhite; width: 100%; max-width: 450px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow: hidden; margin: 20px;">
+        
+        <div style="background: coral; color: white; padding: 20px; font-size: 1.2rem; font-weight: bold; text-align: center;">
+          Написать в техподдержку
+        </div>
+        
+        <form id="support-form" action="https://formspree.io/f/maeyyqvd" method="POST" style="padding: 25px; display: flex; flex-direction: column; gap: 15px;">
+          
+          <div>
+            <label style="display: block; margin-bottom: 5px; color: #333; font-size: 0.9rem;">Ваше имя</label>
+            <input type="text" name="Имя" placeholder="Иван Иванов" required style="width: 100%; padding: 12px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem;">
+          </div>
     
-    <!-- Шапка формы -->
-    <div style="background: coral; color: white; padding: 20px; font-size: 1.2rem; font-weight: bold; text-align: center;">
-      Написать в техподдержку
-    </div>
+          <div>
+            <label style="display: block; margin-bottom: 5px; color: #333; font-size: 0.9rem;">Email для ответа</label>
+            <input type="email" name="Email" placeholder="example@mail.com" required style="width: 100%; padding: 12px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem;">
+          </div>
     
-    <!-- Форма отправки -->
-    <form id="support-form" action="https://formspree.io/f/maeyyqvd" method="POST" style="padding: 25px; display: flex; flex-direction: column; gap: 15px;">
-      
-      <div>
-        <label style="display: block; margin-bottom: 5px; color: #333; font-size: 0.9rem;">Ваше имя</label>
-        <input type="text" name="Имя" placeholder="Иван Иванов" required style="width: 100%; padding: 12px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem;">
-      </div>
-
-      <div>
-        <label style="display: block; margin-bottom: 5px; color: #333; font-size: 0.9rem;">Email для ответа</label>
-        <input type="email" name="Email" placeholder="example@mail.com" required style="width: 100%; padding: 12px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem;">
-      </div>
-
-      <div>
-        <label style="display: block; margin-bottom: 5px; color: #333; font-size: 0.9rem;">Описание проблемы</label>
-        <textarea name="Сообщение" placeholder="Опишите ваш вопрос в деталях..." rows="5" required style="width: 100%; padding: 12px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; resize: vertical;"></textarea>
-      </div>
-
-      <button type="submit" style="background: coral; color: white; border: none; padding: 14px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: bold; margin-top: 10px; transition: background 0.2s;">
-        Отправить обращение
-      </button>
-
-    </form>
-    </div>
-    </div>
-    <hr>
-    <h1>Правила техподдержки:</h1>
-    <h2>Можно отправлять:</h2>
-    <ul>
-      <li>запрос на рекламу;</li>
-      <li>запрос на участие в следующем видео;</li>
-      <li>жалобу на оскорбительный комментарий или баг сайта.</li>
-    </ul>
-    <h2>Нельзя отправлять:</h2>
-    <ul>
-      <li>оскорбительные выражения;</li>
-      <li>бесполезную информацию и глупые вопросы;</li>
-      <li>один и тот же вопрос больше трёх раз (все остальные обращения от этого отправителя будут попадать в папку "Спам").</li>
-    </ul>
-    <hr>
-    <small>Использование моего контента без разрешения Решётки в своих видео строго запрещено</small>
-
-<script>
-  const form = document.getElementById('support-form');
-
-  form.onsubmit = async (e) => {
-    e.preventDefault();
+          <div>
+            <label style="display: block; margin-bottom: 5px; color: #333; font-size: 0.9rem;">Описание проблемы</label>
+            <textarea name="Сообщение" placeholder="Опишите ваш вопрос в деталях..." rows="5" required style="width: 100%; padding: 12px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; resize: vertical;"></textarea>
+          </div>
     
-    // Меняем текст кнопки во время отправки
-    const btn = form.querySelector('button');
-    const originalText = btn.innerText;
-    btn.innerText = 'Отправка...';
-    btn.disabled = true;
-
-    const formData = new FormData(form);
+          <button type="submit" style="background: coral; color: white; border: none; padding: 14px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: bold; margin-top: 10px; transition: background 0.2s;">
+            Отправить обращение
+          </button>
     
-    try {
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      });
-
-      if (response.ok) {
-        alert('Спасибо! Ваше обращение успешно отправлено на почту поддержки.');
-        form.reset();
-      } else {
-        alert('Произошла ошибка при отправке. Проверьте правильность введенных данных.');
-      }
-    } catch (error) {
-      alert('Не удалось связаться с сервером. Проверьте интернет-соединение.');
-    } finally {
-      // Возвращаем кнопку в исходное состояние
-      btn.innerText = originalText;
-      btn.disabled = false;
-    }
-  };
-</script>
-</body>
+        </form>
+        </div>
+        </div>
+        <hr>
+        <h1>Правила техподдержки:</h1>
+        <h2>Можно отправлять:</h2>
+        <ul>
+          <li>запрос на рекламу;</li>
+          <li>запрос на участие в следующем видео;</li>
+          <li>жалобу на оскорбительный комментарий или баг сайта.</li>
+        </ul>
+        <h2>Нельзя отправлять:</h2>
+        <ul>
+          <li>оскорбительные выражения;</li>
+          <li>бесполезную информацию и глупые вопросы;</li>
+          <li>один и тот же вопрос больше трёх раз (все остальные обращения от этого отправителя будут попадать в папку "Спам").</li>
+        </ul>
+        <hr>
+    	<footer>
+        	<small>Использование моего контента без разрешения Решётки в своих видео строго запрещено</small>
+    	</footer>
+        
+        <script>
+          const form = document.getElementById('support-form');
+        
+          form.onsubmit = async (e) => {
+            e.preventDefault();
+            
+            const btn = form.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = 'Отправка...';
+            btn.disabled = true;
+        
+            const formData = new FormData(form);
+            
+            try {
+              const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+              });
+        
+              if (response.ok) {
+                alert('Спасибо! Ваше обращение успешно отправлено на почту поддержки.');
+                form.reset();
+              } else {
+                alert('Произошла ошибка при отправке. Проверьте правильность введенных данных.');
+              }
+            } catch (error) {
+              alert('Не удалось связаться с сервером. Проверьте интернет-соединение.');
+            } finally {
+              btn.innerText = originalText;
+              btn.disabled = false;
+            }
+          };
+        </script>
+    </body>
 </html>
