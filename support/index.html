@@ -17,12 +17,10 @@
   
     <div style="background: antiquewhite; width: 100%; max-width: 450px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow: hidden; margin: 20px;">
     
-    <!-- Шапка формы -->
     <div style="background: coral; color: white; padding: 20px; font-size: 1.2rem; font-weight: bold; text-align: center;">
       Написать в техподдержку
     </div>
     
-    <!-- Форма отправки -->
     <form id="support-form" action="https://formspree.io/f/maeyyqvd" method="POST" style="padding: 25px; display: flex; flex-direction: column; gap: 15px;">
       
       <div>
@@ -53,8 +51,7 @@
 
   form.onsubmit = async (e) => {
     e.preventDefault();
-    
-    // Меняем текст кнопки во время отправки
+  
     const btn = form.querySelector('button');
     const originalText = btn.innerText;
     btn.innerText = 'Отправка...';
@@ -78,7 +75,6 @@
     } catch (error) {
       alert('Не удалось связаться с сервером. Проверьте интернет-соединение.');
     } finally {
-      // Возвращаем кнопку в исходное состояние
       btn.innerText = originalText;
       btn.disabled = false;
     }
