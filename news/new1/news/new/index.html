@@ -11,17 +11,93 @@
             <img src="../../resources/images/logo.png" width="100px" alt="">
             <h1>Lattice</h1>
         </div></a>
-        <h1>Lorem Ipsum</h1>
+        <h1>VPN</h1>
         <hr>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper neque non ipsum aliquam ultricies.
-        In sollicitudin id urna sed aliquet. Morbi rutrum, augue id sagittis tempus, enim erat dictum risus, et feugiat lectus tortor in est.
-        Aenean finibus, sapien a laoreet aliquam, metus nulla pellentesque nulla, id faucibus ante lorem non nibh. Fusce viverra nisi et dui blandit gravida.
-        Etiam molestie sem sit amet ullamcorper fermentum. Donec et lacinia risus, id malesuada quam. Donec non rutrum lorem. Cras hendrerit, sem sed vestibulum lobortis, sapien orci ornare sem, ac pellentesque odio nulla sed libero.
-        Integer vitae vehicula mauris. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin sollicitudin congue justo a pretium.
-        Maecenas sagittis dui suscipit erat pretium ornare. Cras sed mi varius, egestas dolor et, consequat sapien.</p>
-        <p>Etiam congue quis augue vel pretium. Nulla facilisi. Donec et congue neque, quis fermentum arcu. Nullam faucibus magna dui, vel ultricies nunc porttitor et.
-        Vivamus congue sem ut semper finibus. Quisque eleifend odio a sapien scelerisque lacinia. Aenean semper nisl sed efficitur maximus. Aliquam orci diam, vestibulum id risus quis, vulputate lacinia eros.
-        Etiam sit amet dui nec diam interdum pretium.</p>
+        html<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Простой Веб-Анонимайзер</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        input[type="url"] {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        iframe {
+            width: 100%;
+            height: 70vh;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Простой Веб-Прокси</h2>
+    <p>Введите адрес сайта (обязательно с http:// или https://) и нажмите «Открыть»</p>
+
+    <div class="search-container">
+        <input type="url" id="urlInput" placeholder="https://example.com" value="https://example.com">
+        <button onclick="openSite()">Открыть</button>
+    </div>
+
+    <!-- Окно, в котором будет отображаться открытый сайт -->
+    <iframe id="proxyFrame" name="proxyFrame"></iframe>
+
+    <script>
+        function openSite() {
+            const url = document.getElementById('urlInput').value;
+            const iframe = document.getElementById('proxyFrame');
+            
+            if (!url) {
+                alert('Пожалуйста, введите URL-адрес');
+                return;
+            }
+
+            // Используем бесплатный публичный CORS-прокси (allorigins)
+            // Он помогает обойти запреты на отображение сайтов в iframe
+            const proxyUrl = 'https://allorigins.win' + encodeURIComponent(url);
+            
+            // Загружаем сайт через прокси в наше окно
+            iframe.src = proxyUrl;
+        }
+    </script>
+
+</body>
+</html>
         <hr>
         <small>Использование моего контента без разрешения в своих видео строго запрещено</small>
     </body>
