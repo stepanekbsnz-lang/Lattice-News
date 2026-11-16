@@ -1,37 +1,323 @@
 
-const form = document.getElementById('support-form');
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lattice - Техподдержка</title>
 
-form.onsubmit = async (e) => {
-    e.preventDefault();
+    <link rel="stylesheet" href="../resources/style.css">
+    <link rel="icon" href="../resources/images/favicon.ico">
 
-    const btn = form.querySelector('button');
-    const originalText = btn.innerText;
-
-    btn.innerText = 'Отправка...';
-    btn.disabled = true;
-
-    const formData = new FormData(form);
-
-    try {
-        const response = await fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-
-        if (response.ok) {
-            alert('Спасибо! Ваше обращение успешно отправлено на почту поддержки Решётки.');
-            form.reset();
-        } else {
-            alert('Произошла ошибка при отправке. Проверьте правильность введенных данных.');
+    <style>
+        body {
+            font-family: Arial, sans-serif;
         }
 
-    } catch (error) {
-        alert('Не удалось связаться с сервером. Проверьте интернет-соединение.');
-    } finally {
-        btn.innerText = originalText;
-        btn.disabled = false;
-    }
-};
+        #support-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .support-card {
+            background: antiquewhite;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+            margin: 20px;
+        }
+
+        .support-header {
+            background: coral;
+            color: white;
+            padding: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .support-form {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .support-form label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .support-form input,
+        .support-form textarea {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: Arial, sans-serif;
+        }
+
+        .support-form textarea {
+            resize: vertical;
+        }
+
+        .support-form button {
+            background: coral;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+
+        .support-form button:hover {
+            background: #e66b50;
+        }
+
+        .support-form button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .rules {
+            margin: 25px;
+            padding: 20px;
+            background: antiquewhite;
+            border-radius: 12px;
+            line-height: 1.6;
+        }
+
+        .rules h2 {
+            color: coral;
+        }
+
+        .warning {
+            background: #ffe0df;
+            border-left: 5px solid red;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+
+        #status {
+            display: none;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        #status.success {
+            display: block;
+            background: #d8f5df;
+            color: #176b2c;
+        }
+
+        #status.error {
+            display: block;
+            background: #ffe0df;
+            color: #a00000;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="../">
+        <div class="logo">
+            <img src="../resources/images/logo.png"
+                 width="100px"
+                 alt="Lattice">
+            <h1>Lattice</h1>
+        </div>
+    </a>
+
+    <h1>Техподдержка</h1>
+    <hr>
+
+    <div id="support-container">
+
+        <div class="support-card">
+
+            <div class="support-header">
+                Написать в техподдержку
+            </div>
+
+            <form id="support-form"
+                  class="support-form"
+                  action="https://formspree.io/f/maeyyqvd"
+                  method="POST">
+
+                <div>
+                    <label for="name">Ваше имя</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="Имя"
+                        placeholder="Иван Иванов"
+                        required>
+                </div>
+
+                <div>
+                    <label for="email">Email для ответа</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="Email"
+                        placeholder="example@mail.com"
+                        required>
+                </div>
+
+                <div>
+                    <label for="message">Описание проблемы</label>
+                    <textarea
+                        id="message"
+                        name="Сообщение"
+                        placeholder="Опишите ваш вопрос в деталях..."
+                        rows="5"
+                        required></textarea>
+                </div>
+
+                <div id="status"></div>
+
+                <button type="submit">
+                    ОТПРАВИТЬ ОБРАЩЕНИЕ
+                </button>
+
+            </form>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <div class="rules">
+
+        <h1>Правила техподдержки</h1>
+
+        <h2>Можно отправлять:</h2>
+
+        <ul>
+            <li>Запросы на рекламу.</li>
+            <li>Запросы на участие в следующем видео.</li>
+            <li>Жалобы на оскорбительные комментарии.</li>
+            <li>Сообщения об ошибках и багах сайта.</li>
+            <li>Предложения по улучшению сайта.</li>
+            <li>Вопросы по работе сайта.</li>
+        </ul>
+
+        <hr>
+
+        <h2>Нельзя отправлять:</h2>
+
+        <ul>
+            <li>Оскорбления и угрозы.</li>
+            <li>Спам и массовые сообщения.</li>
+            <li>Один и тот же вопрос более трёх раз.</li>
+            <li>Бессмысленные сообщения.</li>
+            <li>Рекламу сторонних сайтов без разрешения.</li>
+            <li>Ложные жалобы и заведомо недостоверную информацию.</li>
+        </ul>
+
+        <hr>
+
+        <h2>Рекомендуется:</h2>
+
+        <ul>
+            <li>Подробно описывать проблему.</li>
+            <li>Указывать, на какой странице возникла ошибка.</li>
+            <li>При необходимости прикладывать ссылку на страницу с багом.</li>
+            <li>Писать грамотно и вежливо.</li>
+            <li>Указывать действующий Email для ответа.</li>
+            <li>Не отправлять повторные обращения без необходимости.</li>
+        </ul>
+
+        <div class="warning">
+            <strong>Внимание!</strong>
+            Нарушение правил техподдержки может привести к
+            ограничению обработки ваших обращений.
+        </div>
+
+    </div>
+
+    <hr>
+
+    <footer>
+        <small>
+            Использование моего контента без разрешения Решётки
+            в своих видео строго запрещено.
+        </small>
+    </footer>
+
+    <script>
+        const form = document.getElementById('support-form');
+        const status = document.getElementById('status');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const btn = form.querySelector('button');
+            const originalText = btn.innerText;
+
+            btn.innerText = 'Отправка...';
+            btn.disabled = true;
+
+            status.className = '';
+            status.style.display = 'none';
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    status.innerText =
+                        'Спасибо! Ваше обращение успешно отправлено на почту поддержки Решётки.';
+
+                    status.className = 'success';
+                    form.reset();
+
+                } else {
+                    status.innerText =
+                        'Произошла ошибка при отправке. Попробуйте ещё раз позже.';
+
+                    status.className = 'error';
+                }
+
+            } catch (error) {
+                status.innerText =
+                    'Не удалось связаться с сервером. Проверьте интернет-соединение.';
+
+                status.className = 'error';
+
+            } finally {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        });
+    </script>
+
+</body>
+</html>
+
